@@ -32,6 +32,7 @@
 1. [ENG] Adjust oil pressure table - @tracernz (Mike)
 1. [FBW] Added option to have two axis for rudder e.g. racing pedals - @frankkopp (Frank Kopp)
 1. [EFB] GSX Integration - Lucky38i (Lucky38#3550)
+1. [EFB] Allow payload page passenger seating to be manipulated by external apps & WASM via LocalVars - @2hwk (2Cas#1022)
 
 ## 0.9.0
 

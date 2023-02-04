@@ -527,6 +527,7 @@ class EngineControl {
   /// Updates Engine N1 and N2 with our own algorithm for start-up and shutdown
   /// </summary>
   void updatePrimaryParameters(int engine, double simN1, double simN2) {
+
     if (engine == 1) {
       simVars->setEngine1N1(simN1);
       simVars->setEngine1N2(simN2);
@@ -748,20 +749,6 @@ class EngineControl {
     }
   }
 
-  int getStationCount(long long paxStationFlags) {
-    int count = 0;
-    int eol = 0;
-    while (paxStationFlags && eol < 64) {
-      count += paxStationFlags & 1;
-      paxStationFlags >>= 1;
-      eol++;
-    }
-    if (eol >= 64) {
-      std::cerr << "ERROR: limit reached" << std::endl;
-    }
-    return count;
-  }
-
   /// <summary>
   /// FBW Fuel Consumption and Tankering
   /// Updates Fuel Consumption with realistic values
@@ -792,10 +779,10 @@ class EngineControl {
     double engine4FF = simVars->getEngine4FF();        // KG/H
 
     double fuelWeightGallon = simVars->getFuelWeightGallon();
-    double fuelUsedEngine1 = simVars->getFuelUsedEngine1();  // Kg
+    double fuelUsedEngine1 = simVars->getFuelUsedEngine1();    // Kg
     double fuelUsedEngine2 = simVars->getFuelUsedEngine2();  // Kg
-    double fuelUsedEngine3 = simVars->getFuelUsedEngine3();  // Kg
-    double fuelUsedEngine4 = simVars->getFuelUsedEngine4();  // Kg
+    double fuelUsedEngine3 = simVars->getFuelUsedEngine3();    // Kg
+    double fuelUsedEngine4 = simVars->getFuelUsedEngine4();    // Kg
 
     double fuelLeftPre = simVars->getFuelLeftPre();                                   // LBS
     double fuelRightPre = simVars->getFuelRightPre();                                 // LBS
@@ -1056,7 +1043,7 @@ class EngineControl {
         fuelBurn3 = 0;
         fuelBurn4 = 0;
       }
-      fuelLeft = (fuelLeftPre - (fuelBurn1 * KGS_TO_LBS) - (fuelBurn2 * KGS_TO_LBS)) + xfrAuxLeft + (xfrCenter / 2);     // LBS
+      fuelLeft = (fuelLeftPre - (fuelBurn1 * KGS_TO_LBS) - (fuelBurn2 * KGS_TO_LBS)) + xfrAuxLeft + (xfrCenter / 2);  // LBS
       fuelRight = (fuelRightPre - (fuelBurn3 * KGS_TO_LBS) - (fuelBurn4 * KGS_TO_LBS)) + xfrAuxRight + (xfrCenter / 2);  // LBS
 
       // Checking for Inner Tank overflow - Will be taken off with Rust code
@@ -1079,10 +1066,10 @@ class EngineControl {
       simVars->setEngine2PreFF(engine2FF);
       simVars->setEngine3PreFF(engine3FF);
       simVars->setEngine4PreFF(engine4FF);
-      simVars->setFuelUsedEngine1(fuelUsedEngine1);   // in KG
-      simVars->setFuelUsedEngine2(fuelUsedEngine2);   // in KG
-      simVars->setFuelUsedEngine3(fuelUsedEngine3);   // in KG
-      simVars->setFuelUsedEngine4(fuelUsedEngine4);   // in KG
+      simVars->setFuelUsedEngine1(fuelUsedEngine1);       // in KG
+      simVars->setFuelUsedEngine2(fuelUsedEngine2);       // in KG
+      simVars->setFuelUsedEngine3(fuelUsedEngine3);       // in KG
+      simVars->setFuelUsedEngine4(fuelUsedEngine4);       // in KG
       simVars->setFuelAuxLeftPre(leftAuxQuantity);    // in LBS
       simVars->setFuelAuxRightPre(rightAuxQuantity);  // in LBS
       simVars->setFuelCenterPre(fuelCenter);          // in LBS
@@ -1399,6 +1386,7 @@ class EngineControl {
         simN2Engine4Pre = simN2;
         timer = simVars->getEngine4Timer();
       }
+
 
       switch (int(engineState)) {
         case 2:
